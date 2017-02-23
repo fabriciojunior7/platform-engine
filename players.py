@@ -24,24 +24,44 @@ class Player(entidades.Entidade):
 			if(self.velocidadeY < self.velocidadeYMax):
 				self.velocidadeY += self.gravidade
 			self.y += self.velocidadeY
-			self.corpo = pygame.Rect(self.x, self.y, self.largura, self.altura)
+		else:
+			self.velocidadeY = 0
+
+		#AtualizarPosisoes
+		self.corpo = pygame.Rect(self.x, self.y, self.largura, self.altura)
+		self.topo = pygame.Rect(self.x + 2, (self.y - self.alturaTB), self.larguraTB, self.alturaTB)
+		self.base = pygame.Rect(self.x + 2, (self.y + self.altura), self.larguraTB, self.alturaTB)
+		self.direita = pygame.Rect((self.x - self.larguraDE), self.y + 2, self.larguraDE, self.alturaDE)
+		self.esquerda = pygame.Rect((self.x + self.largura), self.y + 2, self.larguraDE, self.alturaDE)
 
 	def botaoPressionado(self, key):
 		if(key == pygame.K_a):
 			self.ad[0] = True
 		if(key == pygame.K_d):
 			self.ad[1] = True
+		if(key == pygame.K_w):
+			self.colidindo = False
+			self.velocidadeY -= 10
 
 	def botaoSolto(self, key):
 		if(key == pygame.K_a):
 			self.ad[0] = False
 		if(key == pygame.K_d):
-			self.ad[1] = False		
+			self.ad[1] = False	
+
+	def colidiuTopo(self):
+		pass
+
+	def colidiuBase(self, y):
+		self.y = y - self.altura - 1
+		self.colidindo = True
+
 		
 	def vibrar(self):
 		self.x += random.randint(-1, 1)
 		self.y += random.randint(-1, 1)
 		self.corpo = pygame.Rect(self.x, self.y, self.largura, self.altura)
+
 
 
 

@@ -17,14 +17,22 @@ def game():
 	walls = []
 	numWalls = 1
 	for w in range(numWalls):
-		walls.append(paredes.Parede(500, 500, 100, 30, cores.preto))
+		walls.append(paredes.Parede(500, 640, 100, 30, cores.preto))
 
 	def desenhar():
 		#Rodar
 		pygame.display.update()
 		relogio.tick(frames)
-		if(p1.y > altura):
-			p1.y = 0
+		if(p1.y > (altura - p1.altura)):
+			p1.colidiuBase(altura - 9)
+		for w in walls:
+			if(p1.topo.colliderect(w.base)):
+				p1.colidiuTopo()
+			if(p1.base.colliderect(w.topo)):
+				p1.colidiuBase(w.y)
+			else:
+				p1.colidindo = False
+
 		#Desenhar
 		tela.fill(cores.branco)
 		p1.atualizarPosicao(largura, altura)
