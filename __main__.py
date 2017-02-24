@@ -13,25 +13,33 @@ def game():
 	frames = 60
 
 	#Objetos
-	p1 = players.Player(270, 0, 40, 40, cores.vermelho)
+	p1 = players.Player(350, 400, 40, 40, cores.vermelho)
 	walls = []
 	numWalls = 1
 	for w in range(numWalls):
 		walls.append(paredes.Parede(500, 640, 100, 30, cores.preto))
+		walls.append(paredes.Parede(200, 600, 100, 100, cores.preto))
 
 	def desenhar():
 		#Rodar
 		pygame.display.update()
 		relogio.tick(frames)
 		if(p1.y > (altura - p1.altura)):
-			p1.colidiuBase(altura - 9)
+			if(p1.velocidadeY > 0):
+				p1.velocidadeY = 0
+				p1.y = (altura - p1.altura)
 		for w in walls:
 			if(p1.topo.colliderect(w.base)):
-				p1.colidiuTopo()
+				p1.colidiuTopo(w.y + w.altura + w.alturaTB)
+
 			if(p1.base.colliderect(w.topo)):
 				p1.colidiuBase(w.y)
 			else:
 				p1.colidindo = False
+
+			if(p1.direita.colliderect(w.esquerda)):
+				p1.colidiuDireita(w.x)
+				print "Oi"
 
 		#Desenhar
 		tela.fill(cores.branco)

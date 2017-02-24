@@ -12,12 +12,14 @@ class Player(entidades.Entidade):
 		self.gravidade = 0.1
 		self.colidindo = False
 		self.ad = [False, False]
+		self.colisaoDireita = False
+		self.colisaoEsquerda = False
 
 	def atualizarPosicao(self, largura, altura):
 		#Eixo X
 		if(self.ad[0] == True and self.x > 0):
 			self.x -= self.velocidadeXMax
-		if(self.ad[1] == True and self.x < (largura - self.largura)):
+		if(self.ad[1] == True and self.x < (largura - self.largura) and self.colisaoDireita == False):
 			self.x += self.velocidadeXMax
 		#Eixo Y
 		if(self.colidindo == False):
@@ -41,7 +43,7 @@ class Player(entidades.Entidade):
 			self.ad[1] = True
 		if(key == pygame.K_w):
 			self.colidindo = False
-			self.velocidadeY -= 10
+			self.velocidadeY = -5
 
 	def botaoSolto(self, key):
 		if(key == pygame.K_a):
@@ -49,12 +51,21 @@ class Player(entidades.Entidade):
 		if(key == pygame.K_d):
 			self.ad[1] = False	
 
-	def colidiuTopo(self):
-		pass
+	def colidiuTopo(self, y):
+		if(self.velocidadeY < 0):
+			self.velocidadeY = 0
 
 	def colidiuBase(self, y):
-		self.y = y - self.altura - 1
-		self.colidindo = True
+		if(self.velocidadeY < 0):
+			self.colidindo = False
+		else:
+			self.colidindo = True
+			self.y = y - self.altura - 1
+
+	def colidiuDireita(self, x):
+		self.x = x - self.largura
+		self.colidiuDireita = True
+		
 
 		
 	def vibrar(self):
