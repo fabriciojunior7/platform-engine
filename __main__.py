@@ -3,7 +3,7 @@ import cores
 import players, paredes
 
 def game():
-	
+		
 	pygame.init()
 	informacaoTela = pygame.display.Info()
 	largura = informacaoTela.current_w
@@ -17,8 +17,8 @@ def game():
 	walls = []
 	numWalls = 1
 	for w in range(numWalls):
-		walls.append(paredes.Parede(500, 640, 100, 30, cores.preto))
-		walls.append(paredes.Parede(200, 600, 100, 100, cores.preto))
+		walls.append(paredes.Parede(500, 240, 100, 30, cores.preto))
+		walls.append(paredes.Parede(200, 200, 100, 100, cores.preto))
 
 	def desenhar():
 		#Rodar
