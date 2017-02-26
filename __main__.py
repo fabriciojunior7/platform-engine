@@ -13,15 +13,14 @@ def game():
 	frames = 60
 
 	#Objetos
-	p1 = players.Player(350, 400, 40, 40, cores.vermelho)
+	p1 = players.Player(10, 500, 30, 30, cores.vermelho)
 	walls = []
 	numWalls = 1
 	for w in range(numWalls):
-		walls.append(paredes.Parede(10, 600, 100, 160, cores.preto))
-		walls.append(paredes.Parede(200, 600, 100, 160, cores.preto))
-		walls.append(paredes.Parede(500, 600, 100, 160, cores.preto))
-		walls.append(paredes.Parede(700, 600, 100, 160, cores.preto))
-		walls.append(paredes.Parede(850, 600, 100, 160, cores.preto))
+		walls.append(paredes.Parede(10, 650, 100, 100, cores.preto))
+		walls.append(paredes.Parede(250, 650, 100, 100, cores.preto))
+		walls.append(paredes.Parede(550, 580, 100, 100, cores.preto))
+		walls.append(paredes.Parede(850, 500, 100, 100, cores.preto))
 
 	def desenhar():
 		#Rodar

@@ -8,14 +8,12 @@ class Player(entidades.Entidade):
 		self.velocidadeX = 0.0
 		self.velocidadeXMax = 5.0
 		self.velocidadeY = 0.0
-		self.velocidadeYMax = 10.0
-		self.gravidade = 0.1
+		self.velocidadeYMax = 20.0
+		self.gravidade = 0.3
 		self.colidindo = False
 		self.ad = [False, False]
-		self.colisaoDireita = False
-		self.colisaoEsquerda = False
+		self.forcaDoPulo = -8
 		self.impulso = 0
-		self.forcaDoPulo = -5
 
 	def atualizarPosicao(self, largura, altura):
 		#Eixo X
@@ -33,10 +31,10 @@ class Player(entidades.Entidade):
 
 		#AtualizarPosisoes
 		self.corpo = pygame.Rect(self.x, self.y, self.largura, self.altura)
-		self.topo = pygame.Rect(self.x + 2, (self.y - self.alturaTB), self.larguraTB, self.alturaTB)
-		self.base = pygame.Rect(self.x + 2, (self.y + self.altura), self.larguraTB, self.alturaTB)
-		self.direita = pygame.Rect((self.x - self.larguraDE), self.y + 2, self.larguraDE, self.alturaDE)
-		self.esquerda = pygame.Rect((self.x + self.largura), self.y + 2, self.larguraDE, self.alturaDE)
+		self.topo = pygame.Rect(self.x, (self.y - self.alturaTB), self.larguraTB, self.alturaTB)
+		self.base = pygame.Rect(self.x, (self.y + self.altura), self.larguraTB, self.alturaTB)
+		self.direita = pygame.Rect((self.x - self.larguraDE), self.y, self.larguraDE, self.alturaDE)
+		self.esquerda = pygame.Rect((self.x + self.largura), self.y, self.larguraDE, self.alturaDE)
 
 	def botaoPressionado(self, key):
 		if(key == pygame.K_a):
@@ -45,7 +43,7 @@ class Player(entidades.Entidade):
 			self.ad[1] = True
 		if(key == pygame.K_w):
 			self.colidindo = False
-			self.velocidadeY = -5
+			self.velocidadeY = self.forcaDoPulo
 
 
 	def botaoSolto(self, key):
@@ -63,15 +61,13 @@ class Player(entidades.Entidade):
 			self.colidindo = False
 		else:
 			self.colidindo = True
-			self.y = y - self.altura - 2
+			self.y = y - self.altura - 4
 
 	def colidiuDireita(self, x, largura):
 		self.x = x + largura + 8
-		#self.colidiuDireita = True
 
 	def colidiuEsquerda(self, x):
 		self.x = x - self.largura - 8
-		#self.colidiuDireita = True
 		
 
 		
