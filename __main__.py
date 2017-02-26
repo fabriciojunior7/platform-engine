@@ -17,8 +17,11 @@ def game():
 	walls = []
 	numWalls = 1
 	for w in range(numWalls):
-		walls.append(paredes.Parede(500, 240, 100, 30, cores.preto))
-		walls.append(paredes.Parede(200, 200, 100, 100, cores.preto))
+		walls.append(paredes.Parede(10, 600, 100, 160, cores.preto))
+		walls.append(paredes.Parede(200, 600, 100, 160, cores.preto))
+		walls.append(paredes.Parede(500, 600, 100, 160, cores.preto))
+		walls.append(paredes.Parede(700, 600, 100, 160, cores.preto))
+		walls.append(paredes.Parede(850, 600, 100, 160, cores.preto))
 
 	def desenhar():
 		#Rodar
@@ -28,18 +31,22 @@ def game():
 			if(p1.velocidadeY > 0):
 				p1.velocidadeY = 0
 				p1.y = (altura - p1.altura)
+
+		for w in walls:
+			if(p1.base.colliderect(w.topo)):
+				p1.colidiuBase(w.y)
+				break
+			else:
+				p1.colidindo = False
+
 		for w in walls:
 			if(p1.topo.colliderect(w.base)):
 				p1.colidiuTopo(w.y + w.altura + w.alturaTB)
 
-			if(p1.base.colliderect(w.topo)):
-				p1.colidiuBase(w.y)
-			else:
-				p1.colidindo = False
-
 			if(p1.direita.colliderect(w.esquerda)):
-				p1.colidiuDireita(w.x)
-				print "Oi"
+				p1.colidiuDireita(w.x, w.largura)
+			elif(p1.esquerda.colliderect(w.direita)):
+				p1.colidiuEsquerda(w.x)
 
 		#Desenhar
 		tela.fill(cores.branco)
